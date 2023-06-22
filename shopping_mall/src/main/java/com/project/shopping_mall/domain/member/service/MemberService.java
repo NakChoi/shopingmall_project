@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberService {
 
     private final MemberRepository memberRepository;
@@ -31,8 +32,14 @@ public class MemberService {
         return verifyExistsMemberId(memberId);
     }
 
+    public Member updateMember(Member member) {
+        Member verifiedMember = verifyExistsMemberId(member.getMemberId());
 
 
+        Optional.ofNullable(member.getPassword()).ifPresent(password -> verifiedMember.setPassword(password));
+
+        return verifiedMember;
+    }
 
 
     private void verifyExistsEmail(String email){

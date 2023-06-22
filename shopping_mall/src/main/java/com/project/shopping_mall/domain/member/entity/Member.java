@@ -31,8 +31,6 @@ public class Member extends Auditable {
     private String phoneNumber;
 
 
-
-
 }
 
 
