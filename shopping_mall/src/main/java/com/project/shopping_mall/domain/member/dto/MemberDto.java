@@ -1,5 +1,6 @@
 package com.project.shopping_mall.domain.member.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.Pattern;
@@ -21,6 +22,19 @@ public class MemberDto {
         private String phoneNumber;
 
 
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class Response{
+
+        private String memberId;
+
+        private String email;
+
+        private String name;
+
+        private String phoneNumber;
     }
 }
 

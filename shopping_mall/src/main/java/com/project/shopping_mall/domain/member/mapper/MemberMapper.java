@@ -10,6 +10,8 @@ public interface MemberMapper {
 
     Member memberPostToMember(MemberDto.Post memberPostDto);
 
+    MemberDto.Response MemberToMemberResponse(Member member);
+
 }
 
 

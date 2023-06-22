@@ -4,6 +4,7 @@ import com.project.shopping_mall.domain.member.entity.Member;
 import com.project.shopping_mall.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -16,12 +17,23 @@ public class MemberService {
 
     public Member registerMember(Member member) {
         verifyExistsEmail(member.getEmail());
+        System.out.println(member.getPhoneNumber());
 
         Member savedMember = memberRepository.save(member);
 
         return savedMember;
 
     }
+
+    @Transactional(readOnly = true)
+    public Member findMember(Long memberId){
+
+        return verifyExistsMemberId(memberId);
+    }
+
+
+
+
 
     private void verifyExistsEmail(String email){
         Optional<Member> member = memberRepository.findByEmail(email);
@@ -32,8 +44,16 @@ public class MemberService {
 
     }
 
+    private Member verifyExistsMemberId(Long memberId){
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException());
+
+        return member;
+    }
+
 
 }
+
+
 
 
 

@@ -9,3 +9,6 @@ import lombok.Getter;
 public class SingleResponseDto<T> {
     private T data;
 }
+
+
+

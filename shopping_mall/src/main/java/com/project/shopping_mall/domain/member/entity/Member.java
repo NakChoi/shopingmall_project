@@ -28,7 +28,9 @@ public class Member extends Auditable {
     private String password;
 
     @Column
-    private Long phoneNumber;
+    private String phoneNumber;
+
+
 
 
 }
