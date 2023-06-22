@@ -41,6 +41,11 @@ public class MemberService {
         return verifiedMember;
     }
 
+    public void deleteMember(Long memberId) {
+
+        memberRepository.deleteById(memberId);
+    }
+
 
     private void verifyExistsEmail(String email){
         Optional<Member> member = memberRepository.findByEmail(email);
