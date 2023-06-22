@@ -11,3 +11,6 @@ public interface MemberMapper {
     Member memberPostToMember(MemberDto.Post memberPostDto);
 
 }
+
+
+

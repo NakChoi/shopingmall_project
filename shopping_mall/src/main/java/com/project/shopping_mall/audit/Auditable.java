@@ -3,7 +3,6 @@ package com.project.shopping_mall.audit;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -15,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseTime {
+public abstract class Auditable {
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
@@ -23,3 +22,5 @@ public abstract class BaseTime {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 }
+
+

@@ -35,3 +35,6 @@ public class MemberController {
         return ResponseEntity.created(URI.create("/member"+ createdMember.getMemberId())).build();
     }
 }
+
+
+
