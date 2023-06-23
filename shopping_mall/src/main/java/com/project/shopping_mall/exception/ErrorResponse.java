@@ -3,6 +3,8 @@ package com.project.shopping_mall.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 
 import javax.validation.ConstraintViolation;
@@ -11,11 +13,21 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
-@AllArgsConstructor
 public class ErrorResponse {
 
     private List<FieldError> fieldErrors;
     private List<ConstraintViolationError> violationErrors;
+    private CustomErrors customErrors;
+
+
+    public ErrorResponse(List<FieldError> fieldErrors, List<ConstraintViolationError> violationErrors) {
+        this.fieldErrors = fieldErrors;
+        this.violationErrors = violationErrors;
+    }
+
+    public ErrorResponse(CustomErrors customErrors) {
+        this.customErrors = customErrors;
+    }
 
     public static ErrorResponse of(BindingResult bindingResult) {
         return new ErrorResponse(FieldError.of(bindingResult), null);
@@ -23,6 +35,10 @@ public class ErrorResponse {
 
     public static ErrorResponse of(Set<ConstraintViolation<?>> violations) {
         return new ErrorResponse(null, ConstraintViolationError.of(violations));
+    }
+
+    public static ErrorResponse of(ExceptionCode exceptionCode){
+        return new ErrorResponse(CustomErrors.of(exceptionCode));
     }
 
     @Getter
@@ -68,6 +84,27 @@ public class ErrorResponse {
                             constraintViolation.getInvalidValue().toString(),
                             constraintViolation.getMessage()
                     )).collect(Collectors.toList());
+        }
+    }
+
+
+    @Getter
+    public static class CustomErrors{
+
+        private HttpStatus httpStatus;
+        private String message;
+
+        private CustomErrors(HttpStatus httpStatus, String message) {
+            this.httpStatus = httpStatus;
+            this.message = message;
+        }
+
+        public static CustomErrors of(ExceptionCode exceptionCode){
+
+            CustomErrors customErrors = new CustomErrors(exceptionCode.getHttpStatus(), exceptionCode.getMessage());
+
+            return customErrors;
+
         }
     }
 

@@ -1,7 +1,9 @@
 package com.project.shopping_mall.exception;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolationException;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionAdvice {
 
@@ -29,6 +32,15 @@ public class GlobalExceptionAdvice {
         final ErrorResponse response = ErrorResponse.of(e.getConstraintViolations());
 
         return response;
+    }
+
+    @ExceptionHandler
+    public ResponseEntity handeCustomException(CustomException customException){
+        log.error("handleCustomException", customException);
+
+        final ErrorResponse errorResponse = ErrorResponse.of(customException.getExceptionCode());
+
+        return new ResponseEntity<>(errorResponse, customException.getExceptionCode().getHttpStatus());
     }
 }
 

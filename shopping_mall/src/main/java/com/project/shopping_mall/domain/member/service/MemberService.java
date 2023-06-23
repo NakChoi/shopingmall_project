@@ -2,6 +2,8 @@ package com.project.shopping_mall.domain.member.service;
 
 import com.project.shopping_mall.domain.member.entity.Member;
 import com.project.shopping_mall.domain.member.repository.MemberRepository;
+import com.project.shopping_mall.exception.CustomException;
+import com.project.shopping_mall.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +20,6 @@ public class MemberService {
 
     public Member registerMember(Member member) {
         verifyExistsEmail(member.getEmail());
-        System.out.println(member.getPhoneNumber());
 
         Member savedMember = memberRepository.save(member);
 
@@ -51,13 +52,13 @@ public class MemberService {
         Optional<Member> member = memberRepository.findByEmail(email);
 
         if (member.isPresent()) {
-            throw new IllegalArgumentException();
+            throw new CustomException(ExceptionCode.MEMBER_EXIST);
         }
 
     }
 
     private Member verifyExistsMemberId(Long memberId){
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException());
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new CustomException(ExceptionCode.MEMBER_NOT_FOUND));
 
         return member;
     }
