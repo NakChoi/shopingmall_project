@@ -38,7 +38,7 @@ public class GlobalExceptionAdvice {
     public ResponseEntity handeCustomException(CustomException customException){
         log.error("handleCustomException", customException);
 
-        final ErrorResponse errorResponse = ErrorResponse.of(customException.getExceptionCode());
+        final CustomErrorResponse errorResponse = CustomErrorResponse.of(customException.getExceptionCode());
 
         return new ResponseEntity<>(errorResponse, customException.getExceptionCode().getHttpStatus());
     }
