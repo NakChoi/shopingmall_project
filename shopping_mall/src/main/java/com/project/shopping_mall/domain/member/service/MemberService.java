@@ -4,10 +4,13 @@ import com.project.shopping_mall.domain.member.entity.Member;
 import com.project.shopping_mall.domain.member.repository.MemberRepository;
 import com.project.shopping_mall.exception.CustomException;
 import com.project.shopping_mall.exception.ExceptionCode;
+import com.project.shopping_mall.security.utils.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -17,9 +20,17 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final CustomAuthorityUtils authorityUtils;
 
     public Member registerMember(Member member) {
         verifyExistsEmail(member.getEmail());
+
+        String encryptedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encryptedPassword);
+
+        List<String> roles = authorityUtils.createRoles(member.getEmail());
+        member.setRoles(roles);
 
         Member savedMember = memberRepository.save(member);
 
