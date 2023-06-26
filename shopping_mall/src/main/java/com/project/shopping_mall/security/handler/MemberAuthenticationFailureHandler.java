@@ -34,3 +34,5 @@ public class MemberAuthenticationFailureHandler implements AuthenticationFailure
         response.getWriter().write(gson.toJson(errorResponse, ErrorResponse.class));   // Gson을 이용해 ErrorResponse 객체를 JSON 포맷 문자열로 변환 후, 출력 스트림을 생성
     }
 }
+
+
