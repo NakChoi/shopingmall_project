@@ -1,13 +1,16 @@
 package com.project.shopping_mall.security.config;
 
 
+import com.project.shopping_mall.domain.member.service.MemberService;
 import com.project.shopping_mall.security.filter.JwtAuthenticationFilter;
 import com.project.shopping_mall.security.filter.JwtVerificationFilter;
-import com.project.shopping_mall.security.handler.MemberAuthenticationFailureHandler;
-import com.project.shopping_mall.security.handler.MemberAuthenticationSuccessHandler;
+import com.project.shopping_mall.security.handler.*;
 import com.project.shopping_mall.security.jwt.JwtTokenizer;
+import com.project.shopping_mall.security.oauth2.handler.OAuth2MemberSuccessHandler;
+import com.project.shopping_mall.security.service.CustomOAuth2UserService;
 import com.project.shopping_mall.security.utils.CustomAuthorityUtils;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,8 +18,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -28,10 +34,22 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @Configuration
-@AllArgsConstructor
+//@AllArgsConstructor
+@RequiredArgsConstructor
 public class SecurityConfiguration {
+
+
+    @Value("${spring.security.oauth2.client.registration.google.client-id}")
+    private String googleClientId;
+    @Value("${spring.security.oauth2.client.registration.google.client-secret}")
+    private String googleClientSecret;
+
+
+
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
+    private final CustomOAuth2UserService customOAuth2UserService;
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -44,22 +62,29 @@ public class SecurityConfiguration {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
+                .accessDeniedHandler(new MemberAccessDeniedHandler())
+                .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers(HttpMethod.POST, "/member").permitAll()
-                        .antMatchers(HttpMethod.PATCH, "/member/**").hasRole("USER")
-                        .antMatchers(HttpMethod.GET, "/member/**").hasRole("USER")
+                        /*.antMatchers(HttpMethod.PATCH, "/member/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/member/**").hasRole("USER")*/
                         .anyRequest().permitAll()
-                );
+                )
+                .oauth2Login()
+                    .userInfoEndpoint() //  OAuth2 로그인 성공 후 사용자 정보를 가져올 때 설정을 담당
+                        .userService(customOAuth2UserService) // userService 에 소셜 로그인 성공 시 진행할 OAuth2UserService 인터페이스의 구현체를 등록
+                .and()
+                .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, authorityUtils))
+                .failureHandler(new MemberAuthenticationFailureHandler());
+
 
         return httpSecurity.build();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
@@ -87,8 +112,28 @@ public class SecurityConfiguration {
 
             builder
                     .addFilter(jwtAuthenticationFilter)
-                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class); // JwtVerificationFilter를 JwtAuthenticationFilter 뒤에 추가
+                    //.addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class) // JwtVerificationFilter를 JwtAuthenticationFilter 뒤에 추가
+                    .addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class);
+
         }
+    }
+
+    private ClientRegistration clientRegistration(){
+        return ClientRegistration.withRegistrationId("google")
+                .clientId(googleClientId)
+                .clientSecret(googleClientSecret)
+                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .redirectUri("http://localhost:8080/login/oauth2/code/google")
+                .scope("profile", "email")
+                .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
+                .tokenUri("https://www.googleapis.com/oauth2/v4/token")
+                .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
+                .userNameAttributeName(IdTokenClaimNames.SUB)
+                .jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
+                .clientName("Google")
+                .build();
+
     }
 
 }
