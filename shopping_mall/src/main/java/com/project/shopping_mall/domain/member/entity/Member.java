@@ -3,6 +3,7 @@ package com.project.shopping_mall.domain.member.entity;
 
 import com.project.shopping_mall.audit.Auditable;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -14,7 +15,12 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Member extends Auditable {
+
+    public Member(String email) {
+        this.email = email;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
