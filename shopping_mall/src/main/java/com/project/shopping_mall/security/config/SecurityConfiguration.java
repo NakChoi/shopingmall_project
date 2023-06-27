@@ -1,13 +1,12 @@
 package com.project.shopping_mall.security.config;
 
 
-import com.project.shopping_mall.domain.member.service.MemberService;
 import com.project.shopping_mall.security.filter.JwtAuthenticationFilter;
 import com.project.shopping_mall.security.filter.JwtVerificationFilter;
 import com.project.shopping_mall.security.handler.*;
 import com.project.shopping_mall.security.jwt.JwtTokenizer;
 import com.project.shopping_mall.security.oauth2.handler.OAuth2MemberSuccessHandler;
-import com.project.shopping_mall.security.service.CustomOAuth2UserService;
+import com.project.shopping_mall.security.oauth2.service.CustomOAuth2UserService;
 import com.project.shopping_mall.security.utils.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,11 +17,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
-import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
-import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -70,8 +67,8 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers(HttpMethod.POST, "/member").permitAll()
-                        /*.antMatchers(HttpMethod.PATCH, "/member/**").hasRole("USER")
-                        .antMatchers(HttpMethod.GET, "/member/**").hasRole("USER")*/
+                        .antMatchers(HttpMethod.PATCH, "/member/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/member/**").hasRole("USER")
                         .anyRequest().permitAll()
                 )
                 .oauth2Login()
@@ -83,6 +80,11 @@ public class SecurityConfiguration {
 
 
         return httpSecurity.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
 
@@ -116,24 +118,6 @@ public class SecurityConfiguration {
                     .addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class);
 
         }
-    }
-
-    private ClientRegistration clientRegistration(){
-        return ClientRegistration.withRegistrationId("google")
-                .clientId(googleClientId)
-                .clientSecret(googleClientSecret)
-                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .redirectUri("http://localhost:8080/login/oauth2/code/google")
-                .scope("profile", "email")
-                .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
-                .tokenUri("https://www.googleapis.com/oauth2/v4/token")
-                .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
-                .userNameAttributeName(IdTokenClaimNames.SUB)
-                .jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
-                .clientName("Google")
-                .build();
-
     }
 
 }
