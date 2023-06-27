@@ -30,6 +30,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         System.out.println("OAuth2MemberSuccessHandler");
         var oAuth2User = (OAuth2User)authentication.getPrincipal();
+
         String email = String.valueOf(oAuth2User.getAttributes().get("email"));
         List<String> authorities = authorityUtils.createRoles(email);
 
