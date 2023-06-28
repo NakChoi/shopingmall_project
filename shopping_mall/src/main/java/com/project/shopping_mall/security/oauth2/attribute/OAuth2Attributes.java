@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.util.Map;
-import java.util.UUID;
 
 
 @Getter
@@ -16,7 +15,7 @@ public class OAuth2Attributes {
     private String email;
 
 
-    public static OAuth2Attributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
+    public static OAuth2Attributes of(String userNameAttributeName, Map<String, Object> attributes){
 
             return ofGoogle(userNameAttributeName, attributes);
 
