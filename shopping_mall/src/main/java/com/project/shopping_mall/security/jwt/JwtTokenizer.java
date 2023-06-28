@@ -1,6 +1,10 @@
 package com.project.shopping_mall.security.jwt;
 
 
+import com.project.shopping_mall.domain.member.entity.Member;
+import com.project.shopping_mall.domain.member.repository.MemberRepository;
+import com.project.shopping_mall.exception.CustomException;
+import com.project.shopping_mall.exception.ExceptionCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -8,6 +12,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -15,9 +20,11 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@RequiredArgsConstructor
 public class JwtTokenizer {
     @Getter
     @Value("${jwt.key}")
@@ -61,7 +68,8 @@ public class JwtTokenizer {
                 .compact();
     }
 
-    public Jws<Claims> getClaims(String jws, String base64EncodedSecretKey) { // 참고로 jws 는 Signature 가 포함된 JWT 라는 의미이다.
+    public Jws<Claims> getClaims(String jws) { // 참고로 jws 는 Signature 가 포함된 JWT 라는 의미이다.
+        String base64EncodedSecretKey = encodedBase64SecretKey(getSecretKey());
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
         Jws<Claims> claims = Jwts.parserBuilder()
