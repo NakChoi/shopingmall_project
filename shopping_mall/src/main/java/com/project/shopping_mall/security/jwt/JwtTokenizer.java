@@ -1,10 +1,6 @@
 package com.project.shopping_mall.security.jwt;
 
 
-import com.project.shopping_mall.domain.member.entity.Member;
-import com.project.shopping_mall.domain.member.repository.MemberRepository;
-import com.project.shopping_mall.exception.CustomException;
-import com.project.shopping_mall.exception.ExceptionCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -12,7 +8,6 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -20,11 +15,9 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 @Component
-@RequiredArgsConstructor
 public class JwtTokenizer {
     @Getter
     @Value("${jwt.key}")

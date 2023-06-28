@@ -16,6 +16,6 @@ public class RefreshToken {
 
     private String refreshToken;
 
-    private String accessToken;
+    //private String accessToken;
 
 }
