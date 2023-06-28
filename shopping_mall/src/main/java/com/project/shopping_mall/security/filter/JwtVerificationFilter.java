@@ -41,7 +41,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
 
 
-
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String authorization = request.getHeader("Authorization");
