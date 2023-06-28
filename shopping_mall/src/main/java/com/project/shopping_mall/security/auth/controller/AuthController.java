@@ -1,7 +1,7 @@
 package com.project.shopping_mall.security.auth.controller;
 
 
-import com.project.shopping_mall.security.auth.service.RefreshService;
+import com.project.shopping_mall.security.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +20,14 @@ import javax.validation.Valid;
 public class AuthController {
 
 
-    private final RefreshService refreshService;
+    private final AuthService authService;
 
     @PostMapping("/refresh")
     public ResponseEntity validateRefreshToken(HttpServletRequest request){
 
         String refreshToken = request.getHeader("Refresh");
 
-        String updateAccessToken = refreshService.regenerateAccessToken(refreshToken);
+        String updateAccessToken = authService.regenerateAccessToken(refreshToken);
 
         return ResponseEntity.noContent()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer "+ updateAccessToken)
