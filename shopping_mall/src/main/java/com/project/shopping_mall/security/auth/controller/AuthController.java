@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 
-@Valid
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
@@ -22,7 +20,7 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/refresh")
+    @PostMapping("/refresh-token/validate")
     public ResponseEntity validateRefreshToken(HttpServletRequest request){
 
         String refreshToken = request.getHeader("Refresh");
