@@ -74,14 +74,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         return authorityUtils.createRoles(email);
     }
 
-    private Optional<Member> verifyOAuth2MemberByEmail(String email){
+    private Member verifyOAuth2MemberByEmail(String email){
 
-        Optional<Member> verifiedByEmail = memberRepository.findByEmail(email);
-        if (verifiedByEmail.isPresent()) {
-            throw new CustomException(ExceptionCode.MEMBER_NOT_FOUND);
-        }else {
-            return verifiedByEmail;
-        }
+        Member verifiedByEmail = memberRepository.findByEmail(email).orElseThrow(() -> new CustomException(ExceptionCode.MEMBER_EXIST));
+
+        return verifiedByEmail;
+
 
     }
 
