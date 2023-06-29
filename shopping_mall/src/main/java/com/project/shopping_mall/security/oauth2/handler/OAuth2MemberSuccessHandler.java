@@ -1,5 +1,7 @@
 package com.project.shopping_mall.security.oauth2.handler;
 
+import com.project.shopping_mall.redis.Entity.RefreshToken;
+import com.project.shopping_mall.redis.repository.RefreshTokenRepository;
 import com.project.shopping_mall.security.jwt.JwtTokenizer;
 import com.project.shopping_mall.security.utils.CustomAuthorityUtils;
 import lombok.AllArgsConstructor;
@@ -24,6 +26,7 @@ import java.util.Map;
 public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
@@ -65,10 +68,16 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
     private String delegateRefreshToken(String username) {
         String subject = username;
+
+
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
         String base64EncodedSecretKey = jwtTokenizer.encodedBase64SecretKey(jwtTokenizer.getSecretKey());
 
         String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
+
+        RefreshToken saveRefreshToken = new RefreshToken(username, refreshToken);
+
+        refreshTokenRepository.save(saveRefreshToken);
 
         return refreshToken;
     }
@@ -88,5 +97,4 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
                 .build()
                 .toUri();
     }
-
 }
