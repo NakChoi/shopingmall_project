@@ -35,6 +35,13 @@ public class MemberController {
         return ResponseEntity.created(URI.create("/member"+ createdMember.getMemberId())).build();
     }
 
+    @GetMapping("/{id}/exists")
+    public ResponseEntity checkUniqueId(@PathVariable String id) {
+        memberService.checkUserId(id);
+
+        return ResponseEntity.ok().build();
+    }
+
 
     @DeleteMapping("/{member-id}")
     public ResponseEntity deleteMember(@PathVariable("member-id") @Positive Long memberId) {
