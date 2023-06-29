@@ -19,13 +19,13 @@ import java.net.URI;
 @Valid
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/users")
 public class MemberController {
 
     private final MemberService memberService;
     private final MemberMapper memberMapper;
 
-    @PostMapping("/signUp")
+    @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post memberPostDto){
 
         Member member = memberMapper.memberPostToMember(memberPostDto);
@@ -33,28 +33,6 @@ public class MemberController {
         Member createdMember = memberService.registerMember(member);
 
         return ResponseEntity.created(URI.create("/member"+ createdMember.getMemberId())).build();
-    }
-
-    @GetMapping("/{member-id}")
-    public ResponseEntity getMember(@PathVariable("member-id") @Positive Long memberId) {
-        Member member = memberService.findMember(memberId);
-        MemberDto.Response response = memberMapper.memberToMemberResponse(member);
-
-        return new ResponseEntity(new SingleResponseDto(response), HttpStatus.OK);
-    }
-
-
-    @PatchMapping("/{member-id}")
-    public ResponseEntity patchMember(@PathVariable("member-id") @Positive Long memberId,
-                                      @Valid @RequestBody MemberDto.Patch memberPatchDto){
-
-        Member member = memberMapper.memberPatchToMember(memberPatchDto);
-        member.setMemberId(memberId);
-
-        Member updatedMember = memberService.updateMember(member);
-        MemberDto.Response response = memberMapper.memberToMemberResponse(updatedMember);
-
-        return new ResponseEntity(new SingleResponseDto(response), HttpStatus.OK);
     }
 
 
