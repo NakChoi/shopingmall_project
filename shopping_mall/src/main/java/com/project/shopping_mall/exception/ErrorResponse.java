@@ -18,15 +18,20 @@ public class ErrorResponse {
     private List<FieldError> fieldErrors;
     private List<ConstraintViolationError> violationErrors;
     private CustomErrors customErrors;
+    private HttpStatus httpStatus;
 
 
-    public ErrorResponse(List<FieldError> fieldErrors, List<ConstraintViolationError> violationErrors) {
+    private ErrorResponse(List<FieldError> fieldErrors, List<ConstraintViolationError> violationErrors) {
         this.fieldErrors = fieldErrors;
         this.violationErrors = violationErrors;
     }
 
-    public ErrorResponse(CustomErrors customErrors) {
+    private ErrorResponse(CustomErrors customErrors) {
         this.customErrors = customErrors;
+    }
+
+    private ErrorResponse(HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
     }
 
     public static ErrorResponse of(BindingResult bindingResult) {
@@ -39,6 +44,10 @@ public class ErrorResponse {
 
     public static ErrorResponse of(ExceptionCode exceptionCode){
         return new ErrorResponse(CustomErrors.of(exceptionCode));
+    }
+
+    public static ErrorResponse of(HttpStatus httpStatus){
+        return new ErrorResponse(httpStatus);
     }
 
     @Getter

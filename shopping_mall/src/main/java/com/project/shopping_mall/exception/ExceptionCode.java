@@ -5,7 +5,9 @@ import org.springframework.http.HttpStatus;
 
 public enum ExceptionCode {
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "Member Not Found"),
-    MEMBER_EXIST(HttpStatus.CONFLICT, "Member Exist");
+    MEMBER_EXIST(HttpStatus.CONFLICT, "Member Exist"),
+    ACCESSTOKEN_EXPIRATION(HttpStatus.UNAUTHORIZED, "AceessToken is Expired"),
+    REFRESHTOKEN_EXPIRATION(HttpStatus.UNAUTHORIZED, "REFRESHToken is Expired");
 
 
     @Getter

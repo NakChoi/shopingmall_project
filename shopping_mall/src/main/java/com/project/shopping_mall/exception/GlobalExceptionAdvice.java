@@ -36,7 +36,7 @@ public class GlobalExceptionAdvice {
 
     @ExceptionHandler
     public ResponseEntity handeCustomException(CustomException customException){
-        log.error("handleCustomException", customException);
+        log.error("handleCustomException : ", customException.getMessage());
 
         final CustomErrorResponse errorResponse = CustomErrorResponse.of(customException.getExceptionCode());
 

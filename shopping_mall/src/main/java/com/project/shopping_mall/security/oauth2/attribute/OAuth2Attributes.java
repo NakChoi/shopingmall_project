@@ -10,7 +10,7 @@ import java.util.Map;
 @Builder
 public class OAuth2Attributes {
     private Map<String, Object> attributes;
-    private String nameAttributeKey;
+    //private String nameAttributeKey;
     private String name;
     private String email;
 
@@ -28,7 +28,7 @@ public class OAuth2Attributes {
                 .name(str)
                 .email((String) attributes.get("email"))
                 .attributes(attributes)
-                .nameAttributeKey(userNameAttributeName)
+                //.nameAttributeKey(userNameAttributeName)
                 .build();
     }
 
