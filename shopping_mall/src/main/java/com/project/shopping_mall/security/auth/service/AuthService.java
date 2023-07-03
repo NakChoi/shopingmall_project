@@ -6,6 +6,7 @@ import com.project.shopping_mall.exception.CustomException;
 import com.project.shopping_mall.exception.ExceptionCode;
 import com.project.shopping_mall.redis.repository.RefreshTokenRepository;
 import com.project.shopping_mall.security.jwt.JwtTokenizer;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,12 +27,12 @@ public class AuthService {
 
 
     public String regenerateAccessToken(String refreshToken){
+            String username = (String) jwtTokenizer.getClaims(refreshToken).getBody().get("sub");
 
-        String username = (String) jwtTokenizer.getClaims(refreshToken).getBody().get("sub");
+            String updateAccessToken = delegateAccessToken(username);
+            return updateAccessToken;
 
-        String updateAccessToken = delegateAccessToken(username);
 
-        return updateAccessToken;
     }
 
     private String delegateAccessToken(String username) {
@@ -57,7 +58,7 @@ public class AuthService {
 
     private void verifyRefreshTokenJws(String username) {
 
-            refreshTokenRepository.findById(username).orElseThrow(() -> new CustomException(ExceptionCode.MEMBER_NOT_FOUND));
+            refreshTokenRepository.findById(username).orElseThrow(() -> new CustomException(ExceptionCode.REFRESHTOKEN_EXPIRATION));
     }
 
 

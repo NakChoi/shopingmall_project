@@ -38,6 +38,10 @@ public class MemberService {
 
     }
 
+    public void checkUserId(String id){
+        verifyExistsEmail(id);
+    }
+
     @Transactional(readOnly = true)
     public Member findMember(Long memberId){
 
@@ -73,9 +77,6 @@ public class MemberService {
 
         return member;
     }
-
-
-
 
 }
 
