@@ -14,13 +14,13 @@ import java.io.UnsupportedEncodingException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/login")
+@RequestMapping("/email")
 @Valid
 public class EmailController {
 
     private final EmailService emailService;
 
-    @PostMapping("/emailConfirm")
+    @PostMapping("/confirm")
     public String mailConfirm(@RequestBody EmailConfirmRequestDto emailConfirmRequestDto) throws MessagingException, UnsupportedEncodingException {
         String authCode = emailService.sendEmail(emailConfirmRequestDto.getEmail());
 

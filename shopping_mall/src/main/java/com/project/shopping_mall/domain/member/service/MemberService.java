@@ -23,11 +23,10 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
 
-    public Member registerMember(Member member) {
+    public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
 
-        String encryptedPassword = passwordEncoder.encode(member.getPassword());
-        member.setPassword(encryptedPassword);
+        member.setPassword(encryptedPassword(member.getPassword()));
 
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
@@ -51,8 +50,11 @@ public class MemberService {
     public Member updateMember(Member member) {
         Member verifiedMember = verifyExistsMemberId(member.getMemberId());
 
+        if(!passwordEncoder.matches(member.getPassword(), verifiedMember.getPassword())){
+            throw new CustomException(ExceptionCode.PASSWORD_NOT_MATCH);
+        }
 
-        Optional.ofNullable(member.getPassword()).ifPresent(password -> verifiedMember.setPassword(password));
+        Optional.ofNullable(member.getPassword()).ifPresent(password -> verifiedMember.setPassword(encryptedPassword(member.getPassword())));
 
         return verifiedMember;
     }
@@ -60,6 +62,11 @@ public class MemberService {
     public void deleteMember(Long memberId) {
 
         memberRepository.deleteById(memberId);
+    }
+
+    private String encryptedPassword(String password){
+
+        return passwordEncoder.encode(password);
     }
 
 
