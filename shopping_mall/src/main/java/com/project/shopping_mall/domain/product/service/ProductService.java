@@ -5,6 +5,7 @@ import com.project.shopping_mall.domain.product.entity.Product;
 import com.project.shopping_mall.domain.product.repository.ProductRepository;
 import com.project.shopping_mall.exception.CustomException;
 import com.project.shopping_mall.exception.ExceptionCode;
+import com.project.shopping_mall.utils.CustomBeanUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import java.util.Optional;
 public class ProductService {
     private final ProductRepository productRepository;
 
+    private final CustomBeanUtils customBeanUtils;
 
     public Product createProduct(Product product){
 
@@ -24,7 +26,7 @@ public class ProductService {
 
         Product saveProduct = productRepository.save(product);
 
-        return product;
+        return saveProduct;
     }
 
     public Product findProduct (Long productId){
@@ -38,10 +40,11 @@ public class ProductService {
 
         Product verifiedProduct = verifyProductById(product.getProductId());
 
-        Optional.ofNullable(product.getDescription()).ifPresent(description -> verifiedProduct.setDescription(product.getDescription()));
+        customBeanUtils.copyNonNullProperties(product, verifiedProduct);
+        /*Optional.ofNullable(product.getDescription()).ifPresent(description -> verifiedProduct.setDescription(product.getDescription()));
         Optional.ofNullable(product.getName()).ifPresent(name -> verifiedProduct.setName(product.getName()));
         Optional.ofNullable(product.getPrice()).ifPresent(description -> verifiedProduct.setPrice(product.getPrice()));
-
+*/
         return verifiedProduct;
     }
 
