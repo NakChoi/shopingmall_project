@@ -5,6 +5,7 @@ import com.project.shopping_mall.domain.member.repository.MemberRepository;
 import com.project.shopping_mall.exception.CustomException;
 import com.project.shopping_mall.exception.ExceptionCode;
 import com.project.shopping_mall.security.utils.CustomAuthorityUtils;
+import com.project.shopping_mall.utils.CustomBeanUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
+    private final CustomBeanUtils customBeanUtils;
 
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
@@ -54,7 +56,7 @@ public class MemberService {
             throw new CustomException(ExceptionCode.PASSWORD_NOT_MATCH);
         }
 
-        Optional.ofNullable(member.getPassword()).ifPresent(password -> verifiedMember.setPassword(encryptedPassword(member.getPassword())));
+        customBeanUtils.copyNonNullProperties(member, verifiedMember);
 
         return verifiedMember;
     }
