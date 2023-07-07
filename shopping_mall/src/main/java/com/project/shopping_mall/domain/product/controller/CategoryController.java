@@ -32,7 +32,7 @@ public class CategoryController {
 
         Category savedCategory = categoryService.createPost(category);
 
-        return ResponseEntity.created(URI.create("/category"+ savedCategory.getCategoryId())).build();
+        return ResponseEntity.created(URI.create("/category/"+ savedCategory.getCategoryId())).build();
     }
 
     @PatchMapping("/{category-id}")
@@ -43,8 +43,9 @@ public class CategoryController {
         category.setCategoryId(categoryId);
 
         Category updateCategory = categoryService.updateCategory(category);
+        CategoryDto.Response response = categoryMapper.categoryToCategoryResponseDto(updateCategory);
 
-        return new ResponseEntity(new SingleResponseDto<>(updateCategory), HttpStatus.OK);
+        return new ResponseEntity(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
     @DeleteMapping("/{category-id}")
