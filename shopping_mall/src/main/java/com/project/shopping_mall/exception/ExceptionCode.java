@@ -12,7 +12,9 @@ public enum ExceptionCode {
 
     PRODUCT_NAME_EXIST(HttpStatus.CONFLICT, "Product Name Exists"),
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "Product Not Found"),
-    REFRESHTOKEN_EXPIRATION(HttpStatus.UNAUTHORIZED, "REFRESHToken is Expired");
+    CATEGORY_NAME_EXIST(HttpStatus.CONFLICT, "Category Name Exists"),
+    CATEGORY_NOT_EXIST(HttpStatus.CONFLICT, "Category Not Exists"),
+    REFRESHTOKEN_EXPIRATION(HttpStatus.UNAUTHORIZED, "Refresh Token is Expired");
 
 
     @Getter
