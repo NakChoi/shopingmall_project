@@ -3,7 +3,6 @@ package com.project.shopping_mall.domain.product.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotBlank;
 
 public class CategoryDto {
@@ -32,6 +31,7 @@ public class CategoryDto {
     public static class Response{
 
         private String name;
+
         private Integer seq;
     }
 }

@@ -1,10 +1,16 @@
 package com.project.shopping_mall.domain.product.entity;
 
 
+import com.project.shopping_mall.audit.Auditable;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
-public class ProductCategory {
+@Getter
+@Setter
+public class ProductCategory extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

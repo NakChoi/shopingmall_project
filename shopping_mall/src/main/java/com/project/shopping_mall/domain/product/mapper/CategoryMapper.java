@@ -12,17 +12,22 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
 
+    // Category Dto
+
     Category categoryDtoToCategory(CategoryDto.Post dto);
 
     Category categoryPatchDtoToCategory(CategoryDto.Patch dto);
 
     CategoryDto.Response categoryToCategoryResponseDto(Category category);
 
-    ProductCategoryDto.Response productCategoryToProductCategoryDto(ProductCategory productCategory);
+
+    // Product Category Dto
 
     ProductCategory productCategoryDtoToProductCategory(ProductCategoryDto.Post dto);
 
     ProductCategory productCategoryPatchDtoToProductCategory(ProductCategoryDto.Patch dto);
+
+    ProductCategoryDto.Response productCategoryToProductCategoryDto(ProductCategory productCategory);
 
     List<ProductCategoryDto.Response> categoryProductsToCategoryProductDto(List<ProductCategory> productCategoryList);
 }

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
 
 public class ProductDto {
 
@@ -54,6 +53,5 @@ public class ProductDto {
 
         private String price;
     }
-
 
 }

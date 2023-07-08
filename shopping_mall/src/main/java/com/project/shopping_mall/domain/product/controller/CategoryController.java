@@ -2,8 +2,9 @@ package com.project.shopping_mall.domain.product.controller;
 
 
 import com.project.shopping_mall.domain.product.dto.CategoryDto;
+import com.project.shopping_mall.domain.product.dto.ProductCategoryDto;
 import com.project.shopping_mall.domain.product.entity.Category;
-import com.project.shopping_mall.domain.product.entity.Product;
+import com.project.shopping_mall.domain.product.entity.ProductCategory;
 import com.project.shopping_mall.domain.product.mapper.CategoryMapper;
 import com.project.shopping_mall.domain.product.service.CategoryService;
 import com.project.shopping_mall.globalDto.SingleResponseDto;
@@ -30,7 +31,7 @@ public class CategoryController {
 
         Category category = categoryMapper.categoryDtoToCategory(categoryDto);
 
-        Category savedCategory = categoryService.createPost(category);
+        Category savedCategory = categoryService.createCategory(category);
 
         return ResponseEntity.created(URI.create("/category/"+ savedCategory.getCategoryId())).build();
     }

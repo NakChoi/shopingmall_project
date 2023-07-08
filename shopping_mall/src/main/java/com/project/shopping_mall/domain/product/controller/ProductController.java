@@ -31,7 +31,7 @@ public class ProductController {
 
         Product createdProduct = productService.createProduct(product);
 
-        return ResponseEntity.created(URI.create("/product"+ createdProduct)).build();
+        return ResponseEntity.created(URI.create("/product"+ createdProduct.getProductId())).build();
     }
 
     @GetMapping("/{product-id}")
