@@ -30,7 +30,7 @@ public class MemberController {
 
         Member member = memberMapper.memberPostToMember(memberPostDto);
 
-        Member createdMember = memberService.registerMember(member);
+        Member createdMember = memberService.createMember(member);
 
         return ResponseEntity.created(URI.create("/member"+ createdMember.getMemberId())).build();
     }
@@ -40,9 +40,6 @@ public class MemberController {
         memberService.checkUserId(id);
 
 
-        int a, b;
-
-        a = 4 *(1/2);
         return ResponseEntity.ok().build();
     }
 
