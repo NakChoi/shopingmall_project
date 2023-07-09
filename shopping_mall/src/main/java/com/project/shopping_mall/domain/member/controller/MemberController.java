@@ -5,9 +5,7 @@ import com.project.shopping_mall.domain.member.dto.MemberDto;
 import com.project.shopping_mall.domain.member.entity.Member;
 import com.project.shopping_mall.domain.member.mapper.MemberMapper;
 import com.project.shopping_mall.domain.member.service.MemberService;
-import com.project.shopping_mall.globalDto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +28,7 @@ public class MemberController {
 
         Member member = memberMapper.memberPostToMember(memberPostDto);
 
-        Member createdMember = memberService.registerMember(member);
+        Member createdMember = memberService.createMember(member);
 
         return ResponseEntity.created(URI.create("/member"+ createdMember.getMemberId())).build();
     }

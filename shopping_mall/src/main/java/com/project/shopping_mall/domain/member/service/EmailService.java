@@ -51,9 +51,9 @@ public class EmailService {
     public MimeMessage createEmail(String email) throws MessagingException, UnsupportedEncodingException{
 
         authNum = createRandomCode();
-        String setFrom = "nakchoi94@gmail.com"; // 보내는 사람
+        String setFrom = "test1234@gmail.com"; // 보내는 사람
         String toEmail = email; // 받는 사람
-        String title = "회원가입 인증 번호"; // 제목
+        String title = "회원가입 인증 번호입니다."; // 제목
 
         MimeMessage message = javaMailSender.createMimeMessage();
         message.addRecipients(MimeMessage.RecipientType.TO, toEmail); // 받는 사람 이메일 설정
