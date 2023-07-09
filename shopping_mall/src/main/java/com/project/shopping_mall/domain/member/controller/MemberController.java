@@ -37,6 +37,7 @@ public class MemberController {
     public ResponseEntity checkUniqueId(@PathVariable String id) {
         memberService.checkUserId(id);
 
+
         return ResponseEntity.ok().build();
     }
 

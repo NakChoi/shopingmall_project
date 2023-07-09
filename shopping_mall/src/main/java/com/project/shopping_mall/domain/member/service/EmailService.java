@@ -48,7 +48,7 @@ public class EmailService {
     }
 
     // 메일 양식 작성
-    public MimeMessage createEmail(String email) throws MessagingException, UnsupportedEncodingException{
+    private MimeMessage createEmail(String email) throws MessagingException, UnsupportedEncodingException{
 
         authNum = createRandomCode();
         String setFrom = "test1234@gmail.com"; // 보내는 사람
@@ -77,7 +77,7 @@ public class EmailService {
     }
 
     // 타임 리프를 이용한 context 설정
-    public String setContext(String code){
+    private String setContext(String code){
         Context context = new Context();
         context.setVariable("code", code);
 
