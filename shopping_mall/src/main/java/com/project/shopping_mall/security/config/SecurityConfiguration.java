@@ -79,7 +79,7 @@ public class SecurityConfiguration {
                     .userInfoEndpoint() //  OAuth2 로그인 성공 후 사용자 정보를 가져올 때 설정을 담당
                         .userService(customOAuth2UserService) // userService 에 소셜 로그인 성공 시 진행할 OAuth2UserService 인터페이스의 구현체를 등록
                 .and()
-                .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, authorityUtils))
+                .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, authorityUtils, refreshTokenRepository))
                 .failureHandler(new MemberAuthenticationFailureHandler());
 
 

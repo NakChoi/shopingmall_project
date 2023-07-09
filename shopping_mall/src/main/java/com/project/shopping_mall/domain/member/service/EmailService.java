@@ -44,7 +44,6 @@ public class EmailService {
             }
         }
 
-        System.out.println(key);
         return key.toString();
     }
 
@@ -81,7 +80,8 @@ public class EmailService {
     private String setContext(String code){
         Context context = new Context();
         context.setVariable("code", code);
-        return templateEngine.process("mail",context); // mail.html
+
+        return templateEngine.process("mail", context); // mail.html
     }
 
 

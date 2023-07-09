@@ -5,6 +5,7 @@ import com.project.shopping_mall.domain.member.repository.MemberRepository;
 import com.project.shopping_mall.exception.CustomException;
 import com.project.shopping_mall.exception.ExceptionCode;
 import com.project.shopping_mall.security.utils.CustomAuthorityUtils;
+import com.project.shopping_mall.utils.CustomBeanUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,12 +23,12 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
+    private final CustomBeanUtils customBeanUtils;
 
-    public Member registerMember(Member member) {
+    public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
 
-        String encryptedPassword = passwordEncoder.encode(member.getPassword());
-        member.setPassword(encryptedPassword);
+        member.setPassword(encryptedPassword(member.getPassword()));
 
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
@@ -36,6 +37,10 @@ public class MemberService {
 
         return savedMember;
 
+    }
+
+    public void checkUserId(String id){
+        verifyExistsEmail(id);
     }
 
     @Transactional(readOnly = true)
@@ -47,8 +52,11 @@ public class MemberService {
     public Member updateMember(Member member) {
         Member verifiedMember = verifyExistsMemberId(member.getMemberId());
 
+        if(!passwordEncoder.matches(member.getPassword(), verifiedMember.getPassword())){
+            throw new CustomException(ExceptionCode.PASSWORD_NOT_MATCH);
+        }
 
-        Optional.ofNullable(member.getPassword()).ifPresent(password -> verifiedMember.setPassword(password));
+        customBeanUtils.copyNonNullProperties(member, verifiedMember);
 
         return verifiedMember;
     }
@@ -56,6 +64,11 @@ public class MemberService {
     public void deleteMember(Long memberId) {
 
         memberRepository.deleteById(memberId);
+    }
+
+    private String encryptedPassword(String password){
+
+        return passwordEncoder.encode(password);
     }
 
 
@@ -73,9 +86,6 @@ public class MemberService {
 
         return member;
     }
-
-
-
 
 }
 

@@ -5,9 +5,11 @@ import com.project.shopping_mall.audit.Auditable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import reactor.util.annotation.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,12 +22,18 @@ public class Product extends Auditable {
     private Long productId;
 
     @Column(nullable = false)
+    @NotBlank
     private String name;
 
     @Column(nullable = false)
+    @NotBlank
     private String description;
 
     @Column(nullable = false)
-    private Integer price;
+    @NotBlank
+    private String price;
+
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<ProductCategory> productCategory = new ArrayList<>();
 
 }

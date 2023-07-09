@@ -6,7 +6,12 @@ import org.springframework.http.HttpStatus;
 public enum ExceptionCode {
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "Member Not Found"),
     MEMBER_EXIST(HttpStatus.CONFLICT, "Member Exist"),
+
+    PASSWORD_NOT_MATCH(HttpStatus.UNAUTHORIZED, "Password is Not Matched"),
     ACCESSTOKEN_EXPIRATION(HttpStatus.UNAUTHORIZED, "AceessToken is Expired"),
+
+    PRODUCT_NAME_EXIST(HttpStatus.CONFLICT, "Product Name Exists"),
+    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "Product Not Found"),
     REFRESHTOKEN_EXPIRATION(HttpStatus.UNAUTHORIZED, "REFRESHToken is Expired");
 
 

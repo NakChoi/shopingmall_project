@@ -1,7 +1,10 @@
 package com.project.shopping_mall.security.jwt;
 
 
+import com.project.shopping_mall.exception.CustomException;
+import com.project.shopping_mall.exception.ExceptionCode;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -62,15 +65,18 @@ public class JwtTokenizer {
     }
 
     public Jws<Claims> getClaims(String jws) { // 참고로 jws 는 Signature 가 포함된 JWT 라는 의미이다.
-        String base64EncodedSecretKey = encodedBase64SecretKey(getSecretKey());
-        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
+        try {
+            String base64EncodedSecretKey = encodedBase64SecretKey(getSecretKey());
+            Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
-        Jws<Claims> claims = Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(jws); // 메서드로 JWT 를 파싱해서 Claims 를 얻는다.
-
-        return claims;
+            Jws<Claims> claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(jws); // 메서드로 JWT 를 파싱해서 Claims 를 얻는다.
+            return claims;
+        }catch (ExpiredJwtException e){
+            throw new CustomException(ExceptionCode.REFRESHTOKEN_EXPIRATION);
+        }
     }
 
     // 검증만 하는 용도
