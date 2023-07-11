@@ -2,9 +2,11 @@ package com.project.shopping_mall.domain.product.service;
 
 
 import com.project.shopping_mall.domain.product.entity.Category;
+import com.project.shopping_mall.domain.product.entity.Product;
 import com.project.shopping_mall.domain.product.entity.ProductCategory;
 import com.project.shopping_mall.domain.product.repository.CategoryRepository;
 import com.project.shopping_mall.domain.product.repository.ProductCategoryRepository;
+import com.project.shopping_mall.domain.product.repository.ProductRepository;
 import com.project.shopping_mall.exception.CustomException;
 import com.project.shopping_mall.exception.ExceptionCode;
 import com.project.shopping_mall.utils.CustomBeanUtils;
@@ -12,10 +14,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Pageable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -26,6 +30,7 @@ public class CategoryService {
     final private CustomBeanUtils customBeanUtils;
 
     final private ProductCategoryRepository productCategoryRepository;
+    final private ProductRepository productRepository;
 
     public Category createCategory(Category category){
 
@@ -53,11 +58,22 @@ public class CategoryService {
     }
 
 
-    public Page<ProductCategory> getProductCategory(Long id, int page, int size){
+    public List<Product> getProductCategory(Long id){
 
-        Page<ProductCategory> productCategoryPage = productCategoryRepository.findByCategory_CategoryId(id , PageRequest.of(page-1, size, Sort.by("createdAt").ascending()) );
+        List<ProductCategory> productCategoryList = productCategoryRepository.findByCategory_CategoryId(id);
 
-        return productCategoryPage;
+        List<Product> products = new ArrayList<>();
+
+        System.out.println("=====================================================");
+        System.out.println("=====================================================");
+        System.out.println("=====================================================");
+
+        for(ProductCategory productCategory : productCategoryList){
+            Product product = productCategory.getProduct();
+            products.add(product);
+        }
+
+        return products;
     }
 
     public ProductCategory updateProductCategory(ProductCategory productCategory){
