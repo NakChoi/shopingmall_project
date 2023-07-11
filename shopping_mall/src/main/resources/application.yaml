@@ -21,10 +21,16 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+    defer-datasource-initialization: true
     show-sql: true
     properties:
        hibernate:
         format_sql: true
+  sql:
+    init:
+      data-locations: classpath*:db/h2/data.sql
+      mode: always
+      platform: h2
   security:
     oauth2:
       client:
