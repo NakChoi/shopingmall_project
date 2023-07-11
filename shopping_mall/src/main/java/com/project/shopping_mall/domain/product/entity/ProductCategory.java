@@ -17,7 +17,7 @@ public class ProductCategory extends Auditable {
     private Long ProductCategoryId;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CATEGORY_ID") // Category에 ProductCategory를 어떤 컬럼명으로 설정할 것인지 나타내기 위함.
     private Category category;
 
