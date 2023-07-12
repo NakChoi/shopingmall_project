@@ -36,4 +36,7 @@ public class Product extends Auditable {
     @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<ProductCategory> productCategory = new ArrayList<>();
 
+    @OneToMany(mappedBy = "product")
+    private List<ProductDetail> productDetail = new ArrayList<>();
+
 }
