@@ -2,8 +2,11 @@ package com.project.shopping_mall.domain.product.controller;
 
 
 import com.project.shopping_mall.domain.product.dto.ProductCategoryDto;
+import com.project.shopping_mall.domain.product.dto.ProductDto;
+import com.project.shopping_mall.domain.product.entity.Product;
 import com.project.shopping_mall.domain.product.entity.ProductCategory;
 import com.project.shopping_mall.domain.product.mapper.CategoryMapper;
+import com.project.shopping_mall.domain.product.mapper.ProductMapper;
 import com.project.shopping_mall.domain.product.service.CategoryService;
 import com.project.shopping_mall.globalDto.MultiResponseDto;
 import com.project.shopping_mall.globalDto.SingleResponseDto;
@@ -25,6 +28,7 @@ import java.util.List;
 public class ProductCategoryController {
 
     final private CategoryMapper categoryMapper;
+    final private ProductMapper productMapper;
     final private CategoryService categoryService;
 
 
@@ -39,16 +43,13 @@ public class ProductCategoryController {
     }
 
     @GetMapping("/{category-id}")
-    public ResponseEntity getProductCategories(@PathVariable("category-id") @Positive Long id,
-                                               @RequestParam @Positive int page,
-                                               @RequestParam @Positive int size){
+    public ResponseEntity getProductCategories(@PathVariable("category-id") @Positive Long id){
 
-        Page<ProductCategory> productCategoryPage = categoryService.getProductCategory(id, page, size);
-        List<ProductCategory> productCategoryPageList = productCategoryPage.getContent();
+        List<Product> productCategoryPage = categoryService.getProductCategory(id);
 
-        List<ProductCategoryDto.Response> response = categoryMapper.categoryProductsToCategoryProductDto(productCategoryPageList);
+        List<ProductDto.Response> response = productMapper.productsToProductResponse(productCategoryPage);
 
-        return new ResponseEntity(new MultiResponseDto<>(response, productCategoryPage), HttpStatus.OK);
+        return new ResponseEntity(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
 
