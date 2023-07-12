@@ -62,6 +62,10 @@ public class CategoryService {
 
         List<ProductCategory> productCategoryList = productCategoryRepository.findByCategory_CategoryId(id);
 
+        if(productCategoryList.isEmpty()){
+            throw new CustomException(ExceptionCode.PRODUCT_NOT_FOUND);
+        }
+
         List<Product> products = new ArrayList<>();
 
         System.out.println("=====================================================");
