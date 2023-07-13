@@ -3,8 +3,10 @@ package com.project.shopping_mall.domain.product.mapper;
 
 import com.project.shopping_mall.domain.product.dto.ProductDetailDto;
 import com.project.shopping_mall.domain.product.dto.ProductDto;
+import com.project.shopping_mall.domain.product.dto.ProductSizeDto;
 import com.project.shopping_mall.domain.product.entity.Product;
 import com.project.shopping_mall.domain.product.entity.ProductDetail;
+import com.project.shopping_mall.domain.product.entity.ProductSize;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -35,5 +37,17 @@ public interface ProductMapper {
     ProductDetailDto.Response productDetailToProductDetailPatchResponse(ProductDetail ProductDetail);
 
     ProductDetailDto.Response productDetailToProductDetailResponse(ProductDetailDto ProductDetail);
+
+    // Product Size Mapper
+    @Mapping(source = "product", target = "product.productId")
+    ProductSize productSizeDtoToProductSize(ProductSizeDto.Post productSizeDto);
+
+    @Mapping(source = "product", target = "product.productId")
+    ProductSize productSizePatchDtoToProductSize(ProductSizeDto.Patch productSizeDto);
+
+    @Mapping(source = "product.productId", target = "product")
+    ProductSizeDto.Response productSizeToProductSizeResponseDto(ProductSize productSize);
+
+    List<ProductSizeDto.Response> productSizesToProductSizeResponseDto(List<ProductSize> productSize);
 
 }
