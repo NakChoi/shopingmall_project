@@ -47,4 +47,18 @@ INSERT INTO product_category (category_id, product_id) VALUES(5, 13);
 INSERT INTO product_category (category_id, product_id) VALUES(5, 14);
 INSERT INTO product_category (category_id, product_id) VALUES(5, 15);
 
+-- Product Size
 
+INSERT INTO product_size (prod_size, product_id) VALUES('S', 1);
+INSERT INTO product_size (prod_size, product_id) VALUES('M', 1);
+INSERT INTO product_size (prod_size, product_id) VALUES('L', 1);
+
+INSERT INTO product_size (prod_size, product_id) VALUES('S', 2);
+INSERT INTO product_size (prod_size, product_id) VALUES('M', 2);
+INSERT INTO product_size (prod_size, product_id) VALUES('L', 2);
+
+INSERT INTO product_size (prod_size, product_id) VALUES('S', 3);
+INSERT INTO product_size (prod_size, product_id) VALUES('M', 3);
+INSERT INTO product_size (prod_size, product_id) VALUES('L', 3);
+
+INSERT INTO product_size (prod_size, product_id) VALUES('F', 4);
