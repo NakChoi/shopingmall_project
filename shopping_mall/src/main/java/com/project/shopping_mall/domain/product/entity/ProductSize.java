@@ -16,11 +16,11 @@ public class ProductSize {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ProductSizeId;
 
-    private String size;
+    private String prod_size;
 
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "PRODUCT_ID")
-    private Product product;*/
+    private Product product;
 
 }
