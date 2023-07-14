@@ -54,7 +54,7 @@ public class ProductSizeController {
     @GetMapping("/{product-id}")
     public ResponseEntity getProductSizes(@PathVariable("product-id") @Positive Long id){
 
-         List<ProductSize> productSizeList = productService.findProductSize(id);
+         List<ProductSize> productSizeList = productService.getProductSize(id);
 
          List<ProductSizeDto.Response> responses = productMapper.productSizesToProductSizeResponseDto(productSizeList);
 

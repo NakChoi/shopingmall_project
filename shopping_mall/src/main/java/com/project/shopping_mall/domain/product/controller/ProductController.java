@@ -37,7 +37,7 @@ public class ProductController {
     @GetMapping("/{product-id}")
     public ResponseEntity getProduct(@PathVariable("product-id") @Positive Long productId){
 
-        Product product = productService.findProduct(productId);
+        Product product = productService.getProduct(productId);
 
         ProductDto.Response findProduct = productMapper.productToProductResponse(product);
 

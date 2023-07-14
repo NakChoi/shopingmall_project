@@ -49,9 +49,9 @@ public class ProductDetailController {
     }
 
     @DeleteMapping("{product-detail-id}")
-    public ResponseEntity deleteProductDetail(@PathVariable @Positive Long productDetailId){
+    public ResponseEntity deleteProductDetail(@PathVariable("product-detail-id") @Positive Long productDetailId){
 
-        productService.deleteProduct(productDetailId);
+        productService.deleteProductDetail(productDetailId);
 
         return ResponseEntity.noContent().build();
     }
