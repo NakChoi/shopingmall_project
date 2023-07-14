@@ -3,9 +3,11 @@ package com.project.shopping_mall.domain.product.mapper;
 
 import com.project.shopping_mall.domain.product.dto.ProductDetailDto;
 import com.project.shopping_mall.domain.product.dto.ProductDto;
+import com.project.shopping_mall.domain.product.dto.ProductImageDto;
 import com.project.shopping_mall.domain.product.dto.ProductSizeDto;
 import com.project.shopping_mall.domain.product.entity.Product;
 import com.project.shopping_mall.domain.product.entity.ProductDetail;
+import com.project.shopping_mall.domain.product.entity.ProductImage;
 import com.project.shopping_mall.domain.product.entity.ProductSize;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -49,5 +51,17 @@ public interface ProductMapper {
     ProductSizeDto.Response productSizeToProductSizeResponseDto(ProductSize productSize);
 
     List<ProductSizeDto.Response> productSizesToProductSizeResponseDto(List<ProductSize> productSize);
+
+    // Product Image Mapper
+    @Mapping(source = "product", target = "product.productId")
+    ProductImage productImageDtoToProductImage(ProductImageDto.Post productImageDto);
+
+    @Mapping(source = "product", target = "product.productId")
+    ProductImage productImagePatchDtoToProductImage(ProductImageDto.Patch productImagePatchDto);
+
+    @Mapping(source = "product.productId", target = "product")
+    ProductImageDto.Response productImageToProductImageResponseDto(ProductImage productImage);
+
+    List<ProductImageDto.Response> productImagesToProductImageResponseDto(List<ProductImage> productImages);
 
 }
