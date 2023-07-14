@@ -3,8 +3,10 @@ package com.project.shopping_mall.domain.product.service;
 
 import com.project.shopping_mall.domain.product.entity.Product;
 import com.project.shopping_mall.domain.product.entity.ProductDetail;
+import com.project.shopping_mall.domain.product.entity.ProductImage;
 import com.project.shopping_mall.domain.product.entity.ProductSize;
 import com.project.shopping_mall.domain.product.repository.ProductDetailRepository;
+import com.project.shopping_mall.domain.product.repository.ProductImageRepository;
 import com.project.shopping_mall.domain.product.repository.ProductRepository;
 import com.project.shopping_mall.domain.product.repository.ProductSizeRepository;
 import com.project.shopping_mall.exception.CustomException;
@@ -23,6 +25,8 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductDetailRepository  productDetailRepository;
     private final ProductSizeRepository productSizeRepository;
+
+    private final ProductImageRepository productImageRepository;
     private final CustomBeanUtils customBeanUtils;
 
     public Product createProduct(Product product){
@@ -52,7 +56,15 @@ public class ProductService {
         return saveProductSize;
     }
 
-    public Product findProduct (Long productId){
+    public ProductImage createProductImage(ProductImage productImage) {
+        verifyProductById(productImage.getProduct().getProductId());
+
+        ProductImage savedProductImage = productImageRepository.save(productImage);
+
+        return savedProductImage;
+    }
+
+    public Product getProduct(Long productId){
 
         Product product = productRepository.findById(productId).orElseThrow(() -> new CustomException(ExceptionCode.PRODUCT_NOT_FOUND));
 
@@ -60,7 +72,7 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public List<ProductSize> findProductSize(Long productId){
+    public List<ProductSize> getProductSize(Long productId){
 
         verifyProductById(productId);
 
@@ -71,6 +83,28 @@ public class ProductService {
         }
 
         return productSizeList;
+    }
+
+    public ProductImage getProductImage(Long productId) {
+        verifyProductById(productId);
+
+
+        // 가장 메인 사진 하나!(seq 1번)
+        ProductImage productImage = productImageRepository.findByProduct_ProductIdAndSeq(productId, "1");
+
+        return productImage;
+    }
+
+    public List<ProductImage> getProductImages(Long productId) {
+        verifyProductById(productId);
+
+        List<ProductImage> productImage = productImageRepository.findByProduct_ProductId(productId);
+
+        if(productImage.isEmpty()){
+            throw new CustomException(ExceptionCode.PRODUCT_IMAGE_NOT_FOUND);
+        }
+
+        return productImage;
     }
 
     public Product updateProduct(Product product) {
@@ -102,6 +136,14 @@ public class ProductService {
         return updateProductSize;
     }
 
+    public ProductImage updateProductImage(ProductImage productImage) {
+        ProductImage verifiedProductImage = verifyProductImageById(productImage.getProductImageId());
+
+        customBeanUtils.copyNonNullProperties(productImage, verifiedProductImage);
+
+        return verifiedProductImage;
+    }
+
     public void deleteProduct(Long productId){
         Product product = verifyProductById(productId);
 
@@ -119,6 +161,12 @@ public class ProductService {
         ProductDetail productDetail = verifyProductDetailById(productDetailId);
 
         productDetailRepository.delete(productDetail);
+    }
+
+    public void deleteProductImage(Long productImageId) {
+        ProductImage productImage = verifyProductImageById(productImageId);
+
+        productImageRepository.delete(productImage);
     }
 
 
@@ -143,4 +191,9 @@ public class ProductService {
     private ProductSize verifyProductSizeById(Long id) {
         return productSizeRepository.findById(id).orElseThrow(() -> new CustomException(ExceptionCode.PRODUCT_SIZE_NOT_FOUND));
     }
+
+    private ProductImage verifyProductImageById(Long id) {
+        return productImageRepository.findById(id).orElseThrow(() -> new CustomException(ExceptionCode.PRODUCT_IMAGE_NOT_FOUND));
+    }
+
 }
