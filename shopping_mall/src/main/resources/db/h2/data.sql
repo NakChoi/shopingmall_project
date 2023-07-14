@@ -62,3 +62,42 @@ INSERT INTO product_size (prod_size, product_id) VALUES('M', 3);
 INSERT INTO product_size (prod_size, product_id) VALUES('L', 3);
 
 INSERT INTO product_size (prod_size, product_id) VALUES('F', 4);
+
+
+-- Product  Image
+
+INSERT INTO product_image (product_id, url, seq) VALUES(1, 'https://aws.s3.test.com/1', '1');
+INSERT INTO product_image (product_id, url, seq) VALUES(1, 'https://aws.s3.test.com/2', '2');
+INSERT INTO product_image (product_id, url, seq) VALUES(1, 'https://aws.s3.test.com/3', '3');
+INSERT INTO product_image (product_id, url, seq) VALUES(1, 'https://aws.s3.test.com/4', '4');
+INSERT INTO product_image (product_id, url, seq) VALUES(1, 'https://aws.s3.test.com/5', '5');
+
+INSERT INTO product_image (product_id, url, seq) VALUES(2, 'https://aws.s3.test.com/1', '1');
+INSERT INTO product_image (product_id, url, seq) VALUES(2, 'https://aws.s3.test.com/2', '2');
+INSERT INTO product_image (product_id, url, seq) VALUES(2, 'https://aws.s3.test.com/3', '3');
+INSERT INTO product_image (product_id, url, seq) VALUES(2, 'https://aws.s3.test.com/4', '4');
+INSERT INTO product_image (product_id, url, seq) VALUES(2, 'https://aws.s3.test.com/5', '5');
+
+INSERT INTO product_image (product_id, url, seq) VALUES(3, 'https://aws.s3.test.com/1', '1');
+INSERT INTO product_image (product_id, url, seq) VALUES(3, 'https://aws.s3.test.com/2', '2');
+INSERT INTO product_image (product_id, url, seq) VALUES(3, 'https://aws.s3.test.com/3', '3');
+INSERT INTO product_image (product_id, url, seq) VALUES(3, 'https://aws.s3.test.com/4', '4');
+INSERT INTO product_image (product_id, url, seq) VALUES(3, 'https://aws.s3.test.com/5', '5');
+
+INSERT INTO product_image (product_id, url, seq) VALUES(4, 'https://aws.s3.test.com/1', '1');
+INSERT INTO product_image (product_id, url, seq) VALUES(4, 'https://aws.s3.test.com/2', '2');
+INSERT INTO product_image (product_id, url, seq) VALUES(4, 'https://aws.s3.test.com/3', '3');
+INSERT INTO product_image (product_id, url, seq) VALUES(4, 'https://aws.s3.test.com/4', '4');
+INSERT INTO product_image (product_id, url, seq) VALUES(4, 'https://aws.s3.test.com/5', '5');
+
+INSERT INTO product_image (product_id, url, seq) VALUES(5, 'https://aws.s3.test.com/1', '1');
+INSERT INTO product_image (product_id, url, seq) VALUES(5, 'https://aws.s3.test.com/2', '2');
+INSERT INTO product_image (product_id, url, seq) VALUES(5, 'https://aws.s3.test.com/3', '3');
+INSERT INTO product_image (product_id, url, seq) VALUES(5, 'https://aws.s3.test.com/4', '4');
+INSERT INTO product_image (product_id, url, seq) VALUES(5, 'https://aws.s3.test.com/5', '5');
+
+INSERT INTO product_image (product_id, url, seq) VALUES(5, 'https://aws.s3.test.com/6', '6');
+INSERT INTO product_image (product_id, url, seq) VALUES(5, 'https://aws.s3.test.com/7', '7');
+INSERT INTO product_image (product_id, url, seq) VALUES(5, 'https://aws.s3.test.com/8', '8');
+INSERT INTO product_image (product_id, url, seq) VALUES(5, 'https://aws.s3.test.com/9', '9');
+INSERT INTO product_image (product_id, url, seq) VALUES(5, 'https://aws.s3.test.com/10', '10');
