@@ -46,4 +46,7 @@ public class Product extends Auditable {
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ProductImage> productImage = new ArrayList<>();
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<ProductReview> productReview = new ArrayList<>();
+
 }
