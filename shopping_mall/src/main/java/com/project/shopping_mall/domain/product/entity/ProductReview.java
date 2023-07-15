@@ -1,6 +1,7 @@
 package com.project.shopping_mall.domain.product.entity;
 
 
+import com.project.shopping_mall.domain.member.entity.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +28,11 @@ public class ProductReview {
     @JoinColumn(name = "PRODUCT_ID")
     private Product product;
 
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
     @OneToMany(mappedBy = "product_review")
     private List<ProductReviewImage> productReviewImage = new ArrayList<>();
+
 }
