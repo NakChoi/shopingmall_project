@@ -1,14 +1,8 @@
 package com.project.shopping_mall.domain.product.mapper;
 
 
-import com.project.shopping_mall.domain.product.dto.ProductDetailDto;
-import com.project.shopping_mall.domain.product.dto.ProductDto;
-import com.project.shopping_mall.domain.product.dto.ProductImageDto;
-import com.project.shopping_mall.domain.product.dto.ProductSizeDto;
-import com.project.shopping_mall.domain.product.entity.Product;
-import com.project.shopping_mall.domain.product.entity.ProductDetail;
-import com.project.shopping_mall.domain.product.entity.ProductImage;
-import com.project.shopping_mall.domain.product.entity.ProductSize;
+import com.project.shopping_mall.domain.product.dto.*;
+import com.project.shopping_mall.domain.product.entity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -63,5 +57,17 @@ public interface ProductMapper {
     ProductImageDto.Response productImageToProductImageResponseDto(ProductImage productImage);
 
     List<ProductImageDto.Response> productImagesToProductImageResponseDto(List<ProductImage> productImages);
+
+    // Product Review Mapper
+    @Mapping(source = "product", target = "product.productId")
+    @Mapping(source = "member", target = "member.memberId")
+    ProductReview productReviewDtoToProductReview(ProductReviewDto.Post ProductReviewDto);
+
+    ProductReview productReviewPatchDtoToProductReview(ProductReviewDto.Patch ProductReviewPatchDto);
+
+
+    ProductReviewDto.Response productReviewToProductReviewResponseDto(ProductReview productReview);
+
+    List<ProductReviewDto.Response> productReviewsToProductReviewResponseDto(List<ProductReview> productReviews);
 
 }
