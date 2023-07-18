@@ -1,3 +1,12 @@
+-- member 초기
+INSERT INTO member (email, password, name, phone_number) VALUES('test1@naver.com', '!As123456', '최낙준', '01012345678');
+INSERT INTO member (email, password, name, phone_number) VALUES('test12@naver.com', '!As123456', '최낙준', '01012345679');
+INSERT INTO member (email, password, name, phone_number) VALUES('test123@naver.com', '!As123456', '최낙준', '01012345670');
+INSERT INTO member (email, password, name, phone_number) VALUES('test1234@naver.com', '!As123456', '최낙준', '01012345671');
+INSERT INTO member (email, password, name, phone_number) VALUES('test12345@naver.com', '!As123456', '최낙준', '01012345672');
+
+
+
 -- product 초기
 
 INSERT INTO product (name, description, price) VALUES('인형 1', '멋지다', '2000');
