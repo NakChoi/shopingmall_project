@@ -24,15 +24,15 @@ public class ProductReview {
 
     private Integer rating;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_ID")
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany(mappedBy = "product_review")
+    @OneToMany(mappedBy = "productReview") // mappedBy = "product_review" 로 하니까 매핑 오류났음.
     private List<ProductReviewImage> productReviewImage = new ArrayList<>();
 
 }
