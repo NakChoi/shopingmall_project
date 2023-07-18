@@ -12,9 +12,9 @@ public class ProductReviewDto {
     @Setter
     public static class Post{
 
-        private Long memberId;
+        private Long member;
 
-        private Long productId;
+        private Long product;
 
         private String title;
 
