@@ -110,3 +110,18 @@ INSERT INTO product_image (product_id, url, seq) VALUES(5, 'https://aws.s3.test.
 INSERT INTO product_image (product_id, url, seq) VALUES(5, 'https://aws.s3.test.com/8', '8');
 INSERT INTO product_image (product_id, url, seq) VALUES(5, 'https://aws.s3.test.com/9', '9');
 INSERT INTO product_image (product_id, url, seq) VALUES(5, 'https://aws.s3.test.com/10', '10');
+
+
+-- Product Review
+INSERT INTO product_review (member_id, product_id, title, content, rating) VALUES(1, 1, '이거 물건입니다!', '진짜 너무 예뻐요!!', 5);
+INSERT INTO product_review (member_id, product_id, title, content, rating) VALUES(2, 1, '이거 물건입니다!!!', '진짜 너무 예뻐요!!', 5);
+INSERT INTO product_review (member_id, product_id, title, content, rating) VALUES(3, 1, '이거 물건입니다!!!!!', '진짜 너무 예뻐요!!!!!', 5);
+INSERT INTO product_review (member_id, product_id, title, content, rating) VALUES(4, 1, '이거 물건입니다!!!!!!!!!!!!', '진짜 너무 예뻐요!!!!!!!!!!!!', 5);
+INSERT INTO product_review (member_id, product_id, title, content, rating) VALUES(5, 1, '이거 물건입니다!!!!!!!!!!!!!!', '진짜 너무 예뻐요!!!!!!!!!!!!!', 5);
+INSERT INTO product_review (member_id, product_id, title, content, rating) VALUES(1, 2, '이거 물건입니다!', '진짜 너무 예뻐요', 5);
+INSERT INTO product_review (member_id, product_id, title, content, rating) VALUES(2, 2, '이거 물건입니다!', '진짜 너무 예뻐요', 5);
+INSERT INTO product_review (member_id, product_id, title, content, rating) VALUES(3, 2, '이거 물건입니다!', '진짜 너무 예뻐요', 5);
+INSERT INTO product_review (member_id, product_id, title, content, rating) VALUES(4, 2, '이거 물건입니다!', '진짜 너무 예뻐요', 5);
+INSERT INTO product_review (member_id, product_id, title, content, rating) VALUES(5, 2, '이거 물건입니다!', '진짜 너무 예뻐요', 5);
+INSERT INTO product_review (member_id, product_id, title, content, rating) VALUES(1, 3, '이거 물건입니다!', '진짜 너무 예뻐요', 5);
+INSERT INTO product_review (member_id, product_id, title, content, rating) VALUES(2, 3, '이거 물건입니다!', '진짜 너무 예뻐요', 5);
