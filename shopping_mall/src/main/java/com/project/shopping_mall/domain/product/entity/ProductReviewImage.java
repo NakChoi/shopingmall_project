@@ -19,6 +19,6 @@ public class ProductReviewImage {
     private Integer seq;
 
     @ManyToOne
-    @JoinColumn(name = "PRODUCT_REVIEW")
+    @JoinColumn(name = "PRODUCT_REVIEW_ID")
     private ProductReview productReview;
 }
