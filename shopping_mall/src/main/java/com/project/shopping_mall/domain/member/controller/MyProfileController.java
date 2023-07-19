@@ -17,7 +17,7 @@ import javax.validation.constraints.Positive;
 @Valid
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/my-profiles")
+@RequestMapping("/my-profile")
 public class MyProfileController {
 
     private final MemberService memberService;
