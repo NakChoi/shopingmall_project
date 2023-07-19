@@ -2,6 +2,7 @@ package com.project.shopping_mall.domain.member.entity;
 
 
 import com.project.shopping_mall.audit.Auditable;
+import com.project.shopping_mall.domain.coupon.entity.Coupon;
 import com.project.shopping_mall.domain.product.entity.ProductReview;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,6 +46,8 @@ public class Member extends Auditable {
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<ProductReview> productReview = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Coupon> coupon = new ArrayList<>();
 
 }
 
