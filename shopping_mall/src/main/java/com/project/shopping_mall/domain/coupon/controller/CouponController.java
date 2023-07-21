@@ -1,20 +1,34 @@
 package com.project.shopping_mall.domain.coupon.controller;
 
 
+import com.project.shopping_mall.domain.coupon.dto.CouponDto;
+import com.project.shopping_mall.domain.coupon.entity.Coupon;
+import com.project.shopping_mall.domain.coupon.mapper.CouponMapper;
+import com.project.shopping_mall.domain.coupon.repository.CouponRepository;
+import com.project.shopping_mall.domain.coupon.service.CouponService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/coupons")
 public class CouponController {
 
+    private final CouponMapper couponMapper;
+
+    private final CouponService couponService;
 
     @PostMapping
-    public ResponseEntity postCoupon(){
+    public ResponseEntity postCoupon(@RequestBody CouponDto.Post dto){
 
-        return ResponseEntity.ok().build();
+        Coupon coupon = couponMapper.couponPostDtoToCoupon(dto);
+
+        Coupon savedCoupon = couponService.postCoupon(coupon);
+
+        return ResponseEntity.created(URI.create("/coupons/"+ savedCoupon.getCouponId())).build();
     }
 
     @PatchMapping
