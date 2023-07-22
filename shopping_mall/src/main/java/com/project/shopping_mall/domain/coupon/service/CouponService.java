@@ -26,10 +26,24 @@ public class CouponService {
         return savedCoupon;
     }
 
+    public Coupon patchCoupon(Coupon coupon) {
+        Coupon verifiedCoupon = verifyCouponById(coupon.getCouponId());
+
+        customBeanUtils.copyNonNullProperties(coupon, verifiedCoupon);
+
+        return verifiedCoupon;
+    }
+
     private void verifyCouponByTitle(Coupon coupon){
         couponRepository.findByTitle(coupon.getTitle()).ifPresent( verifiedCoupon -> {
             throw new CustomException(ExceptionCode.COUPON_EXIST);
         });
+    }
+
+    private Coupon verifyCouponById(Long id) {
+        Coupon coupon = couponRepository.findById(id).orElseThrow(() -> new CustomException(ExceptionCode.COUPON_NOT_EXIST));
+
+        return coupon;
     }
 
 }
