@@ -17,6 +17,7 @@ public enum ExceptionCode {
     CATEGORY_NOT_EXIST(HttpStatus.CONFLICT, "Category Not Exists"),
     REVIEW_NOT_EXIST(HttpStatus.CONFLICT, "Review Not Exists"),
     COUPON_EXIST(HttpStatus.CONFLICT, "Coupon Exist"),
+    COUPON_NOT_EXIST(HttpStatus.NOT_FOUND, "Coupon Not Exist"),
     REFRESHTOKEN_EXPIRATION(HttpStatus.UNAUTHORIZED, "Refresh Token is Expired");
 
 
