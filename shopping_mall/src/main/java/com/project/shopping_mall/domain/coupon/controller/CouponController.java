@@ -6,7 +6,9 @@ import com.project.shopping_mall.domain.coupon.entity.Coupon;
 import com.project.shopping_mall.domain.coupon.mapper.CouponMapper;
 import com.project.shopping_mall.domain.coupon.repository.CouponRepository;
 import com.project.shopping_mall.domain.coupon.service.CouponService;
+import com.project.shopping_mall.globalDto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,10 +33,16 @@ public class CouponController {
         return ResponseEntity.created(URI.create("/coupons/"+ savedCoupon.getCouponId())).build();
     }
 
-    @PatchMapping
-    public ResponseEntity patchCoupon(){
+    @PatchMapping("/{coupon-id}")
+    public ResponseEntity patchCoupon(@RequestBody CouponDto.Patch dto){
 
-        return ResponseEntity.ok().build();
+        Coupon coupon = couponMapper.couponPatchDtoToCoupon(dto);
+
+        Coupon updateCoupon = couponService.patchCoupon(coupon);
+
+        CouponDto.Response response = couponMapper.couponToCouponResponseDto(updateCoupon);
+
+        return new ResponseEntity(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
     @GetMapping           // 쿠폰을 단일로 가져올 일은 없지 않을까?
