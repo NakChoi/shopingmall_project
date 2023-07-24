@@ -34,6 +34,12 @@ public class CouponService {
         return verifiedCoupon;
     }
 
+    public void deleteCoupon(Long id){
+        Coupon coupon = verifyCouponById(id);
+
+        couponRepository.delete(coupon);
+    }
+
     private void verifyCouponByTitle(Coupon coupon){
         couponRepository.findByTitle(coupon.getTitle()).ifPresent( verifiedCoupon -> {
             throw new CustomException(ExceptionCode.COUPON_EXIST);
