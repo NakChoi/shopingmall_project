@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Positive;
 import java.net.URI;
 
 @RestController
@@ -51,9 +52,11 @@ public class CouponController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping
-    public ResponseEntity deleteCoupon(){
+    @DeleteMapping("/{coupon-id}")
+    public ResponseEntity deleteCoupon(@PathVariable("coupon-id") @Positive Long couponId){
 
-        return ResponseEntity.ok().build();
+        couponService.deleteCoupon(couponId);
+
+        return ResponseEntity.noContent().build();
     }
 }
