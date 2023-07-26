@@ -34,6 +34,12 @@ public class CouponService {
         return verifiedCoupon;
     }
 
+    public Coupon getCoupon(Long id){
+        Coupon coupon = verifyCouponById(id);
+
+        return coupon;
+    }
+
     public void deleteCoupon(Long id){
         Coupon coupon = verifyCouponById(id);
 
