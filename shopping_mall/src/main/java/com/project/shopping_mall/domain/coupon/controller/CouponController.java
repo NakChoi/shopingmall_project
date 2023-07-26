@@ -46,7 +46,18 @@ public class CouponController {
         return new ResponseEntity(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
-    @GetMapping           // 쿠폰을 단일로 가져올 일은 없지 않을까?
+    @GetMapping("/{coupon-id}")           // 쿠폰을 단일로 가져올 일은 없지 않을까?
+    public ResponseEntity getCoupon(@PathVariable("coupon-id") Long id){
+
+        Coupon coupon = couponService.getCoupon(id);
+
+        CouponDto.Response response = couponMapper.couponToCouponResponseDto(coupon);
+
+        return new ResponseEntity(new SingleResponseDto<>(response), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/{member-id}")           // 쿠폰을 단일로 가져올 일은 없지 않을까?
     public ResponseEntity getCoupons(){
 
         return ResponseEntity.ok().build();
