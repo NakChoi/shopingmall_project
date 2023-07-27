@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -58,9 +59,13 @@ public class CouponController {
 
 
     @GetMapping("/{member-id}")           // 쿠폰을 단일로 가져올 일은 없지 않을까?
-    public ResponseEntity getCoupons(){
+    public ResponseEntity getCoupons(@PathVariable("coupon-id") Long id){
 
-        return ResponseEntity.ok().build();
+        List<Coupon> coupon = couponService.getCoupons(id);
+
+        List<CouponDto.Response> response = couponMapper.couponsToCouponResponsesDto(coupon);
+
+        return new ResponseEntity(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
     @DeleteMapping("/{coupon-id}")
