@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -38,6 +40,17 @@ public class CouponService {
         Coupon coupon = verifyCouponById(id);
 
         return coupon;
+    }
+
+    public List<Coupon> getCoupons(Long id){
+
+        List<Coupon> coupons = couponRepository.findByMember_MemberId(id);
+
+        if(coupons.isEmpty()){
+            throw new CustomException(ExceptionCode.COUPON_NOT_EXIST);
+        }
+
+        return coupons;
     }
 
     public void deleteCoupon(Long id){
